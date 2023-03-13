@@ -2,18 +2,12 @@ mod a1;
 mod a2;
 mod a3;
 mod a3b;
+mod a5;
 extern crate core;
 
 fn main() {
-    let mut cnt = 10;
-    loop {
-        println!("{:?} seconds to leave...", cnt);
-        cnt = cnt -1;
-        if cnt == 0 {
-            print!("start!!");
-            break;
-        }
-    }
+    let mut cnt = 3;
+    a5::printNumberWithLoop(cnt);
 }
 
 
