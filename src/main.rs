@@ -5,19 +5,14 @@ mod a3b;
 extern crate core;
 
 fn main() {
-    let some = true;
-    match some{
-        true => println!("true"),
-        false => println!("false"),
-    }
-
-    // use underscore
-
-    let num = 10;
+    let num = 5;
     match num {
-        10 => println!("is 10"),
-        _ => println!("not equal to 10"),
+        1 => println!("1"),
+        2 => println!("2"),
+        3 => println!("3"),
+        _ => println!("other"),
     }
+
 }
 
 
