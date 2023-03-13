@@ -1,25 +1,11 @@
+mod a1;
 extern crate core;
+use a1::lastName;
+use crate::a1::printFirstName;
+
 fn main() {
-    println!("Hello, world!");
-    let mut vec = vec![1, 2, 3, 4,5 ];
-    let iter = vec.iter();
-    for v in iter{
-        println!("number is {}", v);
-    }
-
-    let mut two = 2;
-    two = two + 1;
-
-    let a = 3;
-    let b = 4;
-    let c = add(a, b);
-    let str = "hello world";
-    println!("{:?} {:?}",str, c);
-
-
-    program(b);
-    program(11);
-
+    printFirstName();
+    lastName();
 }
 
 fn add(a: i32, b: i32) -> i32 {
