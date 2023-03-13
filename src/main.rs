@@ -5,14 +5,15 @@ mod a3b;
 extern crate core;
 
 fn main() {
-    let num = 5;
-    match num {
-        1 => println!("1"),
-        2 => println!("2"),
-        3 => println!("3"),
-        _ => println!("other"),
+    let mut cnt = 10;
+    loop {
+        println!("{:?} seconds to leave...", cnt);
+        cnt = cnt -1;
+        if cnt == 0 {
+            print!("start!!");
+            break;
+        }
     }
-
 }
 
 
