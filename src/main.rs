@@ -1,4 +1,5 @@
 mod a1;
+mod a2;
 extern crate core;
 use a1::lastName;
 use crate::a1::printFirstName;
@@ -6,11 +7,10 @@ use crate::a1::printFirstName;
 fn main() {
     printFirstName();
     lastName();
+    let i = a2::add(32, 32);
+    a2::display_result(i);
 }
 
-fn add(a: i32, b: i32) -> i32 {
-    a+b
-}
 
 fn program(a: i32) -> (){
     if a>10 {
