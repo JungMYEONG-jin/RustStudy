@@ -9,7 +9,8 @@ extern crate core;
 use std::collections::{BTreeMap, HashMap};
 
 fn main() {
-    a6::print5To1();
+    let string = which_dir(Dir::DOWN);
+    println!("{:?}", string);
 }
 
 
@@ -31,6 +32,25 @@ pub fn restore_string(s: String, indices: Vec<i32>) -> String {
     let mut result = String::new();
     for key in db.keys(){
         result.push(*db.get(key).unwrap()); // &char to char
+    };
+    return result;
+}
+
+enum Dir{
+    UP,
+    DOWN,
+    LEFT,
+    RIGHT
+}
+
+fn which_dir(dir: Dir) -> &'static str {
+    let mut result = "";
+    match dir{
+        Dir::UP => result = "up",
+        Dir::DOWN => result = "down",
+        Dir::LEFT => result = "left",
+        Dir::RIGHT => result = "right",
+        _ => result = "Wrong value!!"
     };
     return result;
 }
