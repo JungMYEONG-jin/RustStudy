@@ -13,15 +13,19 @@ use crate::a7::Color;
 use crate::a8::{Drink, Flavor};
 
 fn main() {
-    let coke = Drink{
-        flavor: Flavor::SOFT,
-        ounce: 20.99,
-    };
+    let numbers = oneTwoThree();
+    let (x, y, z) = oneTwoThree();
 
-    a8::printDrinkInfo(coke);
+    println!("{:?}, {:?}", x, numbers.0);
+    println!("{:?}, {:?}", y, numbers.1);
+    println!("{:?}, {:?}", z, numbers.2);
 
+    let (emp, dir) = ("JAKE", Dir::UP);
 }
 
+fn oneTwoThree() -> (i32, i32, i32){
+    (1, 2, 3)
+}
 
 struct Shop{
     stock: i32,
