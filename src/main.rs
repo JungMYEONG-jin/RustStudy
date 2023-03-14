@@ -4,13 +4,14 @@ mod a3;
 mod a3b;
 mod a5;
 mod a6;
+mod a7;
 extern crate core;
 
 use std::collections::{BTreeMap, HashMap};
+use crate::a7::Color;
 
 fn main() {
-    let string = which_dir(Dir::DOWN);
-    println!("{:?}", string);
+    a7::printColor(Color::RED);
 }
 
 
