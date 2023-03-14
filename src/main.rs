@@ -13,14 +13,11 @@ use crate::a7::Color;
 use crate::a8::{Drink, Flavor};
 
 fn main() {
-    let numbers = oneTwoThree();
-    let (x, y, z) = oneTwoThree();
+    let pos = (2, 3);
+    println!("{:?}, {:?}", pos.0, pos.1);
 
-    println!("{:?}, {:?}", x, numbers.0);
-    println!("{:?}, {:?}", y, numbers.1);
-    println!("{:?}, {:?}", z, numbers.2);
-
-    let (emp, dir) = ("JAKE", Dir::UP);
+    let (x, y) = (2, 3);
+    println!("{:?}, {:?}", x, y);
 }
 
 fn oneTwoThree() -> (i32, i32, i32){
