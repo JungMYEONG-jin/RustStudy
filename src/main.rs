@@ -3,15 +3,13 @@ mod a2;
 mod a3;
 mod a3b;
 mod a5;
+mod a6;
 extern crate core;
 
 use std::collections::{BTreeMap, HashMap};
 
 fn main() {
-    let str = "codeleet";
-    let indices = vec![4,5,6,7,0,2,1,3];
-    let string = restore_string(str.to_string(), indices);
-    println!("{:?}", string);
+    a6::print5To1();
 }
 
 
