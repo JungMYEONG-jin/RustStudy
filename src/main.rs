@@ -5,22 +5,27 @@ mod a3b;
 mod a5;
 mod a6;
 mod a7;
+mod a8;
 extern crate core;
 
 use std::collections::{BTreeMap, HashMap};
 use crate::a7::Color;
+use crate::a8::{Drink, Flavor};
 
 fn main() {
-    a7::printColor(Color::RED);
+    let coke = Drink{
+        flavor: Flavor::SOFT,
+        ounce: 20.99,
+    };
+
+    a8::printDrinkInfo(coke);
+
 }
 
 
-fn program(a: i32) -> (){
-    if a>10 {
-        println!("10보다 큽니다");
-    }else {
-        println!("10보다 작거나 같습니다");
-    }
+struct Shop{
+    stock: i32,
+    price: f64,
 }
 
 
