@@ -8,16 +8,25 @@ mod a7;
 mod a8;
 extern crate core;
 
+use rand::Rng;
 use std::collections::{BTreeMap, HashMap};
 use crate::a7::Color;
 use crate::a8::{Drink, Flavor};
 
 fn main() {
-    let pos = (2, 3);
-    println!("{:?}, {:?}", pos.0, pos.1);
+    let (x, y) = getPos();
+    if y>5 {
+        println!("y > 5")
+    }else if y ==5 {
+        println!("y == 5")
+    }else {
+        println!("y < 5");
+    }
+}
 
-    let (x, y) = (2, 3);
-    println!("{:?}, {:?}", x, y);
+pub fn getPos() -> (i32, i32){
+    let mut rng = rand::thread_rng();
+    (rng.gen::<i32>(), rng.gen::<i32>())
 }
 
 fn oneTwoThree() -> (i32, i32, i32){
