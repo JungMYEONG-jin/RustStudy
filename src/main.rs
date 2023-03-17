@@ -13,15 +13,21 @@ use std::collections::{BTreeMap, HashMap};
 use crate::a7::Color;
 use crate::a8::{Drink, Flavor};
 
+enum Access{
+    ADMIN,
+    USER,
+    GUEST
+}
+
 fn main() {
-    let (x, y) = getPos();
-    if y>5 {
-        println!("y > 5")
-    }else if y ==5 {
-        println!("y == 5")
-    }else {
-        println!("y < 5");
-    }
+
+    // secret file admin only
+    let accessLevel = Access::GUEST;
+    let canAccessFile = match accessLevel {
+        Access::ADMIN => true,
+        _ => false,
+    };
+    assert_eq!(canAccessFile, false);
 }
 
 pub fn getPos() -> (i32, i32){
