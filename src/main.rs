@@ -58,6 +58,22 @@ fn view_bill_menu(bills: &Bills){
     }
 }
 
+fn remove_bill_menu(bills: &mut Bills){
+    for bill in bills.getAll(){
+        println!("{:?}", bill)
+    }
+
+    println!("type name to delete");
+
+    let input = getInput();
+    if bills.remove(&input) {
+        println!("removed");
+    }else {
+        println!("The bill not existed");
+    }
+}
+
+
 fn edit_bill_menu(bills: &mut Bills){
 
 }
@@ -68,6 +84,8 @@ fn mainMenu(){
         println!("Mange Bills");
         println!("1. Add Bill");
         println!("2. View Bills");
+        println!("3. Remove Bill");
+        println!("4. Edit Bill");
         println!("");
         println!("Enter Selection:");
     }
@@ -79,7 +97,9 @@ fn mainMenu(){
         match input.as_str() {
             "1" => add_bill_menu(&mut bills),
             "2" => view_bill_menu(&bills),
-            "3" => edit_bill_menu(&mut bills),
+            "3" => remove_bill_menu(&mut bills),
+            "4" => edit_bill_menu(&mut bills),
+            "5" => roll_back(&mut bills),
             _ => break,
         }
     }

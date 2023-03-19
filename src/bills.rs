@@ -1,3 +1,5 @@
+use std::collections::HashMap;
+
 #[derive(Debug)]
 pub struct Bill{
     pub name: String,
@@ -6,19 +8,28 @@ pub struct Bill{
 
 // 하나만 있을때 inner 종종 씀
 pub struct Bills{
-    inner: Vec<Bill>,
+    inner: HashMap<String, Bill>,
 }
 
 impl Bills{
     pub fn new() -> Self{
-        Self {inner: vec![]}
+        Self {inner: HashMap::new()}
     }
 
     pub fn add(&mut self, bill: Bill){
-        self.inner.push(bill);
+        self.inner.insert(bill.name.clone(), bill);
     }
 
-    pub fn getAll(&self) -> &Vec<Bill>{
-         &self.inner
+
+    pub fn remove(&mut self, str: &str) -> bool{
+        self.inner.remove(str).is_some()
+    }
+
+    pub fn getAll(&self) -> Vec<Bill>{
+         let mut bills = vec![];
+        for bill in  self.inner.values(){
+            bills.push(bill.clone());
+        }
+        bills
     }
 }
