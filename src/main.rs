@@ -146,6 +146,12 @@ fn mainMenu(){
 
 
 fn main() {
-    mainMenu();
+    // closer
+    let add = |a: i32, b: i32| -> i32{
+        a + b
+    };
+    let add2 = |a, b| a+b;
+    let val = add(1, 3);
+    println!("{}", val);
 }
 
