@@ -75,6 +75,21 @@ fn remove_bill_menu(bills: &mut Bills){
 
 
 fn edit_bill_menu(bills: &mut Bills){
+    for bill in bills.getAll(){
+        println!("{:?}", bill)
+    }
+
+    println!("type name to edit");
+    let input = getInput();
+    let amount = get_bill_amount();
+    if bills.edit(&input, amount){
+        println!("updated");
+    }else {
+        println!("The bill not existed");
+    }
+}
+
+fn roll_back(bills: &mut Bills){
 
 }
 
@@ -86,6 +101,7 @@ fn mainMenu(){
         println!("2. View Bills");
         println!("3. Remove Bill");
         println!("4. Edit Bill");
+        println!("5. Rollback");
         println!("");
         println!("Enter Selection:");
     }

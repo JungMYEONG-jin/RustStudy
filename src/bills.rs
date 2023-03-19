@@ -32,4 +32,14 @@ impl Bills{
         }
         bills
     }
+
+    pub fn edit(&mut self, str: &str, amount: f64) -> bool{
+        match self.inner.get_mut(str){
+            Some(bill) => {
+                bill.amount = amount;
+                true
+            }
+            None => false,
+        }
+    }
 }
