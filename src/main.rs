@@ -6,6 +6,10 @@ mod a5;
 mod a6;
 mod a7;
 mod a8;
+mod bills;
+
+use bills::*;
+
 extern crate core;
 extern crate alloc;
 
@@ -18,100 +22,71 @@ use crate::a7::Color;
 use crate::a8::{Drink, Flavor};
 
 
-fn getInput() -> io::Result<String> {
+fn getInput() -> String {
     let mut buffer = String::new();
-    io::stdin().read_line(&mut buffer)?; // ? 의 의미는 실패할수도 있따는걸 알림
-    Ok(buffer.trim().to_owned()) // 소유권 다시 가져오기
-}
-
-
-struct Bill{
-    name: String,
-    priceInfo: PriceInfo,
-}
-
-struct PriceInfo{
-    price: i32,
-    prevPrice: i32,
-}
-
-impl PriceInfo{
-    fn changePrice(&mut self){
-        let mut temp = self.price;
-        self.price = self.prevPrice;
-        self.prevPrice = temp;
+    while io::stdin().read_line(&mut buffer).is_err(){ // try until success
+        println!("Please retry...");
     }
+    // trim remove \n
+    buffer.trim().to_owned()
+}
 
-    fn setPrice(&mut self, price: i32){
-        self.prevPrice = self.price;
-        self.price = price;
+fn get_bill_amount() -> f64{
+    println!("Enter Amount:");
+    loop{
+        let input = getInput();
+        let result: Result<f64, _> = input.parse();
+        // _ 오류 무시
+        match result {
+            Ok(amount) => return amount,
+            Err(_) => println!("please type number"),
+        }
     }
 }
 
-fn addBills(bill: Bill, map:&mut HashMap<String, PriceInfo>){
-    map.insert(bill.name, bill.priceInfo);
+fn add_bill_menu(bills: &mut Bills){
+    let name = getInput();
+    let amount = get_bill_amount();
+    let bill = Bill{ name, amount };
+    bills.add(bill);
+    println!("Bill Added");
 }
 
-fn removeBills(str: &str, map:&mut HashMap<String, PriceInfo>){
-    if map.contains_key(str) {
-        map.remove(str);
-    }else {
-        println!("Not Existed on bills");
+fn view_bill_menu(bills: &Bills){
+    for bill in bills.getAll(){
+        println!("{:?}", bill);
     }
 }
+
+fn edit_bill_menu(bills: &mut Bills){
+
+}
+
+fn mainMenu(){
+    fn show(){
+        println!("");
+        println!("Mange Bills");
+        println!("1. Add Bill");
+        println!("2. View Bills");
+        println!("");
+        println!("Enter Selection:");
+    }
+
+    let mut bills = Bills::new();
+    loop{
+        show();
+        let input = getInput();
+        match input.as_str() {
+            "1" => add_bill_menu(&mut bills),
+            "2" => view_bill_menu(&bills),
+            "3" => edit_bill_menu(&mut bills),
+            _ => break,
+        }
+    }
+}
+
 
 fn main() {
-    let mut map: HashMap<String, PriceInfo> = HashMap::new();
-    let mut buffer = String::new();
-    let mut buffer2 = String::new();
-    println!("Add bill");
-    io::stdin().read_line(&mut buffer);
-    io::stdin().read_line(&mut buffer2);
-
-    // lv1 add bill
-        let bill = Bill{
-            name: buffer.trim().to_owned(),
-            priceInfo: PriceInfo{
-                price: buffer2.trim().to_owned().parse::<i32>().unwrap(),
-                prevPrice: 0,
-            },
-        };
-        addBills(bill, &mut map);
-
-    buffer.clear();
-    buffer2.clear();
-    // lv1 view bills
-    for (name, price) in &map{
-        println!("name {:?}, price {:?}, prevPrice {:?}", name, price.price, price.prevPrice);
-    }
-
-    // lv2 remove bill
-
-    let result2 = io::stdin().read_line(&mut buffer);
-    if result2.is_ok() {
-        removeBills(buffer.trim().to_owned().as_str(), &mut map);
-    }
-    for (name, price) in &map{
-        println!("name {:?}, price {:?}, prevPrice {:?}", name, price.price, price.prevPrice);
-    }
-
-    buffer.clear();
-    buffer2.clear();
-    // edit
-    println!("type name and price that you want to edit");
-    io::stdin().read_line(&mut buffer);
-    io::stdin().read_line(&mut buffer2);
-    let price = buffer2.trim().to_owned().parse::<i32>().unwrap();
-    let temp = map.get(buffer.trim().to_owned().as_str()).unwrap();
-    let mut info = PriceInfo{
-        price: price,
-        prevPrice: temp.price
-    };
-
-    map.insert(buffer.trim().to_owned(), info);
-    for (name, price) in &map{
-        println!("name {:?}, price {:?}, prevPrice {:?}", name, price.price, price.prevPrice);
-    }
-
+    mainMenu();
 }
 
