@@ -7,7 +7,10 @@ mod a6;
 mod a7;
 mod a8;
 extern crate core;
+extern crate alloc;
 
+
+use core::borrow::{Borrow, BorrowMut};
 use rand::Rng;
 use std::io;
 use std::collections::{BTreeMap, HashMap};
@@ -21,71 +24,94 @@ fn getInput() -> io::Result<String> {
     Ok(buffer.trim().to_owned()) // 소유권 다시 가져오기
 }
 
-struct Book{
-    pages: i32,
-    rating: i32,
+
+struct Bill{
+    name: String,
+    priceInfo: PriceInfo,
+}
+
+struct PriceInfo{
+    price: i32,
+    prevPrice: i32,
+}
+
+impl PriceInfo{
+    fn changePrice(&mut self){
+        let mut temp = self.price;
+        self.price = self.prevPrice;
+        self.prevPrice = temp;
+    }
+
+    fn setPrice(&mut self, price: i32){
+        self.prevPrice = self.price;
+        self.price = price;
+    }
+}
+
+fn addBills(bill: Bill, map:&mut HashMap<String, PriceInfo>){
+    map.insert(bill.name, bill.priceInfo);
+}
+
+fn removeBills(str: &str, map:&mut HashMap<String, PriceInfo>){
+    if map.contains_key(str) {
+        map.remove(str);
+    }else {
+        println!("Not Existed on bills");
+    }
 }
 
 fn main() {
+    let mut map: HashMap<String, PriceInfo> = HashMap::new();
     let mut buffer = String::new();
-    println!("Enter keyword");
-    let result = io::stdin().read_line(&mut buffer);
-    if result.is_ok() {
-        match Power::new(&buffer) {
-            Some(state) => checkPowerState(state),
-            None => println!("invalid input"),
-        }
-    } else {
-        println!("error occurred while reading");
+    let mut buffer2 = String::new();
+    println!("Add bill");
+    io::stdin().read_line(&mut buffer);
+    io::stdin().read_line(&mut buffer2);
+
+    // lv1 add bill
+        let bill = Bill{
+            name: buffer.trim().to_owned(),
+            priceInfo: PriceInfo{
+                price: buffer2.trim().to_owned().parse::<i32>().unwrap(),
+                prevPrice: 0,
+            },
+        };
+        addBills(bill, &mut map);
+
+    buffer.clear();
+    buffer2.clear();
+    // lv1 view bills
+    for (name, price) in &map{
+        println!("name {:?}, price {:?}, prevPrice {:?}", name, price.price, price.prevPrice);
+    }
+
+    // lv2 remove bill
+
+    let result2 = io::stdin().read_line(&mut buffer);
+    if result2.is_ok() {
+        removeBills(buffer.trim().to_owned().as_str(), &mut map);
+    }
+    for (name, price) in &map{
+        println!("name {:?}, price {:?}, prevPrice {:?}", name, price.price, price.prevPrice);
+    }
+
+    buffer.clear();
+    buffer2.clear();
+    // edit
+    println!("type name and price that you want to edit");
+    io::stdin().read_line(&mut buffer);
+    io::stdin().read_line(&mut buffer2);
+    let price = buffer2.trim().to_owned().parse::<i32>().unwrap();
+    let temp = map.get(buffer.trim().to_owned().as_str()).unwrap();
+    let mut info = PriceInfo{
+        price: price,
+        prevPrice: temp.price
     };
 
-
-}
-
-fn displayCount(book: &Book) {
-    println!("{:?}", book.pages);
-}
-
-fn displayRating(book: &Book) {
-    println!("{:?}", book.rating);
-}
-
-// 메모리 추적
-// rust는 소유권 모형을 이용해 사용한다.
-// 이동을 안하게 만드려면 대여를 해야한다. & ampersand 사용
-// 데이터는 소유권자만 삭제 가능.
-
-enum Power{
-    Off,
-    Sleep,
-    Reboot,
-    Shutdown,
-    Hibernate,
-}
-
-impl Power {
-    fn new(state: &str) -> Option<Power>{
-        let lower = state.trim().to_lowercase();
-        // as str String을 빌려와서 &str 처럼 만들어
-        match lower.as_str() {
-            "off" => Some(Power::Off),
-            "sleep" => Some(Power::Sleep),
-            "reboot" => Some(Power::Reboot),
-            "shutdown" => Some(Power::Shutdown),
-            "hibernate" => Some(Power::Hibernate),
-            _ => None,
-        }
+    map.insert(buffer.trim().to_owned(), info);
+    for (name, price) in &map{
+        println!("name {:?}, price {:?}, prevPrice {:?}", name, price.price, price.prevPrice);
     }
+
 }
 
-fn checkPowerState(power: Power) {
-    use Power::*;
-    match power {
-        Off => println!("Power Off!"),
-        Sleep => println!("Power Sleep!"),
-        Reboot => println!("Reboot start!"),
-        Shutdown => println!("Shutdown start!"),
-        Hibernate => println!("Hibernate!!"),
-        _ => println!("you typed wrong message..."),
-    }
-}
