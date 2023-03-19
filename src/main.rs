@@ -28,6 +28,7 @@ struct Book{
 
 fn main() {
     let mut buffer = String::new();
+    println!("Enter keyword");
     let result = io::stdin().read_line(&mut buffer);
     if result.is_ok() {
         match Power::new(&buffer) {
