@@ -27,20 +27,18 @@ struct Book{
 }
 
 fn main() {
-    let mut allInput = vec![];
-    let mut timesInput = 0;
-    while timesInput < 2{
-        match getInput() {
-            Ok(words) => {
-                allInput.push(words);
-                timesInput += 1;
-            }
-            Err(e) => println!("error {:?}", e),
+    let mut buffer = String::new();
+    let result = io::stdin().read_line(&mut buffer);
+    if result.is_ok() {
+        match Power::new(&buffer) {
+            Some(state) => checkPowerState(state),
+            None => println!("invalid input"),
         }
-    }
-    for input in allInput {
-        println!("original {:?}\n uppercase {:?}", input, input.to_uppercase());
-    }
+    } else {
+        println!("error occurred while reading");
+    };
+
+
 }
 
 fn displayCount(book: &Book) {
@@ -55,3 +53,38 @@ fn displayRating(book: &Book) {
 // rust는 소유권 모형을 이용해 사용한다.
 // 이동을 안하게 만드려면 대여를 해야한다. & ampersand 사용
 // 데이터는 소유권자만 삭제 가능.
+
+enum Power{
+    Off,
+    Sleep,
+    Reboot,
+    Shutdown,
+    Hibernate,
+}
+
+impl Power {
+    fn new(state: &str) -> Option<Power>{
+        let lower = state.trim().to_lowercase();
+        // as str String을 빌려와서 &str 처럼 만들어
+        match lower.as_str() {
+            "off" => Some(Power::Off),
+            "sleep" => Some(Power::Sleep),
+            "reboot" => Some(Power::Reboot),
+            "shutdown" => Some(Power::Shutdown),
+            "hibernate" => Some(Power::Hibernate),
+            _ => None,
+        }
+    }
+}
+
+fn checkPowerState(power: Power) {
+    use Power::*;
+    match power {
+        Off => println!("Power Off!"),
+        Sleep => println!("Power Sleep!"),
+        Reboot => println!("Reboot start!"),
+        Shutdown => println!("Shutdown start!"),
+        Hibernate => println!("Hibernate!!"),
+        _ => println!("you typed wrong message..."),
+    }
+}
