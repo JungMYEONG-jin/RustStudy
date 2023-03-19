@@ -22,31 +22,48 @@ use crate::a7::Color;
 use crate::a8::{Drink, Flavor};
 
 
-fn getInput() -> String {
+fn getInput() -> Option<String> {
     let mut buffer = String::new();
     while io::stdin().read_line(&mut buffer).is_err(){ // try until success
         println!("Please retry...");
     }
     // trim remove \n
-    buffer.trim().to_owned()
+    let input = buffer.trim().to_owned();
+    if &input == "" {
+        None
+    }else {
+        Some(input)
+    }
 }
 
-fn get_bill_amount() -> f64{
+fn get_bill_amount() -> Option<f64>{
     println!("Enter Amount:");
     loop{
-        let input = getInput();
+        let input: String = match getInput() {
+            Some(val) => val,
+            None => "".to_string(),
+        };
+        if &input == "" { // 다시 입력할 기회를 주기 위해 &
+            return None;
+        }
         let result: Result<f64, _> = input.parse();
         // _ 오류 무시
         match result {
-            Ok(amount) => return amount,
+            Ok(amount) => return Some(amount),
             Err(_) => println!("please type number"),
         }
     }
 }
 
 fn add_bill_menu(bills: &mut Bills){
-    let name = getInput();
-    let amount = get_bill_amount();
+    let name = match getInput() {
+        Some(input) => input,
+        None => return,
+    };
+    let amount = match get_bill_amount() {
+        Some(input) => input,
+        None => return,
+    };
     let bill = Bill{ name, amount };
     bills.add(bill);
     println!("Bill Added");
@@ -65,7 +82,10 @@ fn remove_bill_menu(bills: &mut Bills){
 
     println!("type name to delete");
 
-    let input = getInput();
+    let input = match getInput(){
+        Some(input) => input,
+        None => return,
+    };
     if bills.remove(&input) {
         println!("removed");
     }else {
@@ -80,17 +100,19 @@ fn edit_bill_menu(bills: &mut Bills){
     }
 
     println!("type name to edit");
-    let input = getInput();
-    let amount = get_bill_amount();
+    let input = match getInput(){
+        Some(input) => input,
+        None => return,
+    };
+    let amount = match get_bill_amount(){
+        Some(amount) => amount,
+        None => return,
+    };
     if bills.edit(&input, amount){
         println!("updated");
     }else {
         println!("The bill not existed");
     }
-}
-
-fn roll_back(bills: &mut Bills){
-
 }
 
 fn mainMenu(){
@@ -101,7 +123,6 @@ fn mainMenu(){
         println!("2. View Bills");
         println!("3. Remove Bill");
         println!("4. Edit Bill");
-        println!("5. Rollback");
         println!("");
         println!("Enter Selection:");
     }
@@ -109,13 +130,15 @@ fn mainMenu(){
     let mut bills = Bills::new();
     loop{
         show();
-        let input = getInput();
+        let input = match getInput(){
+            Some(input) => input,
+            None => return,
+        };
         match input.as_str() {
             "1" => add_bill_menu(&mut bills),
             "2" => view_bill_menu(&bills),
             "3" => remove_bill_menu(&mut bills),
             "4" => edit_bill_menu(&mut bills),
-            "5" => roll_back(&mut bills),
             _ => break,
         }
     }
