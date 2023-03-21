@@ -59,3 +59,18 @@ fn main() {
 
 }
 
+fn allCaps(word: &str) -> String{
+    word.to_uppercase()
+}
+
+#[cfg(test)]
+mod test{
+    // crate 소스의 최상단.
+    use crate::*;
+    #[test]
+    fn check_all_caps(){
+        let res = allCaps("hello");
+        let expected = String::from("HELLO");
+        assert_eq!(res, expected, "string should be all uppercase");
+    }
+}
