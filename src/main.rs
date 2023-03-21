@@ -19,7 +19,6 @@ use rand::Rng;
 use std::io;
 use std::collections::{BTreeMap, HashMap};
 use crate::a1::lastName;
-use crate::a7::Color;
 use crate::a8::{Drink, Flavor};
 
 trait Perimeter{
@@ -53,7 +52,27 @@ fn calcPrimeter(thing: impl Perimeter){
     println!("perimeter {:?}", perimeter);
 }
 
+enum Color {
+    Red,
+    Blue,
+    Green,
+}
+
 fn main() {
-    calcPrimeter(Triangle  {a:3, b:2, c:1});
-    calcPrimeter(Square  { a: 2});
+    // learn if let phrase
+    let maybe_user = Some("AA");
+    if let Some(user) = maybe_user{
+        println!("user={:?}", user);
+    }else {
+        println!("no user");
+    }
+
+    let red = Color::Red;
+    if let Color::Red = red {
+        println!("it is red");
+    }else {
+        println!("it is not red");
+    }
+
+
 }
