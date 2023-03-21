@@ -144,14 +144,25 @@ fn mainMenu(){
     }
 }
 
+fn maybe_num() -> Option<i32> {
+
+}
+
+fn maybe_word() -> Option<String> {
+
+}
+
+
 
 fn main() {
     // closer
-    let add = |a: i32, b: i32| -> i32{
-        a + b
+    let plus = match maybe_num() {
+        Some(num) => Some(num+1),
+        None => None,
     };
-    let add2 = |a, b| a+b;
-    let val = add(1, 3);
-    println!("{}", val);
+    // 위 코드를 아래와 같이 map + 클로저로 해결 가능.
+    // map option이 None일때는 실행안됨.
+    let plus = maybe_num().map(|num| num+1);
+    let wordLenTwice = maybe_word().map(|word| word.len()).map(|len| 2*len);
 }
 
