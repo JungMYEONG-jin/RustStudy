@@ -60,19 +60,18 @@ enum Color {
 
 fn main() {
     // learn if let phrase
-    let maybe_user = Some("AA");
-    if let Some(user) = maybe_user{
-        println!("user={:?}", user);
-    }else {
-        println!("no user");
+    let mut data = Some(3);
+
+    while let Some(i) = data{
+        println!("loop");
+        data = None;
     }
 
-    let red = Color::Red;
-    if let Color::Red = red {
-        println!("it is red");
-    }else {
-        println!("it is not red");
-    }
+    let nums = vec![1, 2, 3];
 
+    let mut numIter = nums.iter();
+    while let Some(num) = numIter.next(){
+        println!("{:?}", num);
+    }
 
 }
