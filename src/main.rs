@@ -63,6 +63,25 @@ fn allCaps(word: &str) -> String{
     word.to_uppercase()
 }
 
+fn clamp(n: i32, lower: i32, upper: i32) -> i32{
+    if n < lower {
+        lower
+    }else if n > upper {
+        upper
+    } else {
+        n
+    }
+}
+
+fn div(a: i32, b: i32) -> Option<i32>{
+    if b == 0 {
+        None
+    }else {
+        Some(a / b)
+    }
+}
+
+
 #[cfg(test)]
 mod test{
     // crate 소스의 최상단.
@@ -72,5 +91,33 @@ mod test{
         let res = allCaps("hello");
         let expected = String::from("HELLO");
         assert_eq!(res, expected, "string should be all uppercase");
+    }
+
+    #[test]
+    fn check_clamp(){
+        let res = clamp(3, 4, 5);
+        let expected = 4;
+        assert_eq!(res, expected, "Should be 4");
+    }
+
+    #[test]
+    fn check_clamp_upper(){
+        let res = clamp(3000, 100, 500);
+        let expected = 500;
+        assert_eq!(res, expected, "Should be 500");
+    }
+
+    #[test]
+    fn div_test(){
+        let res = div(3, 0);
+        let expected = None;
+        assert_eq!(res, expected, "should be 0");
+    }
+
+    #[test]
+    fn div_upper_Zero(){
+        let res = div(0, 3);
+        let expected = 0;
+        assert_eq!(res.unwrap(), expected, "should be 0");
     }
 }
