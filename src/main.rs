@@ -42,20 +42,11 @@ fn root() -> Option<Access>{
 }
 
 fn main() {
-    let a: Option<i32> = Some(1);
-    let aSome = a.is_some();
-    dbg!(aSome);
-    let aNone = a.is_none();
-    dbg!(aNone);
-    let aMapped = a.map(|num| num+1);
-    dbg!(aMapped);
-    let aFilter = a.filter(|num| num == &1);
-    dbg!(aFilter);
-    // a가 값이 있으면 a 없다면 closer 값 반환
-    let aElse = a.or_else(|| Some(5));
-    dbg!(aElse);
-    // 값이 없을때 기본값 부여하기에 좋음
-    let unwrapped = a.unwrap_or_else(|| 0);
-    dbg!(unwrapped);
+
+    let numbers = vec![1, 2, 3, 4, 5];
+    let plusOne: Vec<_> = numbers.iter().map(|x| x+1).collect();
+    println!("{:?}", plusOne);
+    let twiceOnlyEven: Vec<_> = numbers.iter().filter(|x| *x%2 == 0).map(|x| 2 * x).collect();
+    println!("{:?}", twiceOnlyEven);
 
 }
