@@ -18,26 +18,28 @@ use core::borrow::{Borrow, BorrowMut};
 use rand::Rng;
 use std::io;
 use std::collections::{BTreeMap, HashMap};
+use crate::a1::lastName;
 use crate::a7::Color;
 use crate::a8::{Drink, Flavor};
 
-
-#[derive(Debug)]
-struct User{
-    id: i32,
-    name: String,
+#[derive(Debug, Eq, PartialEq)]
+enum Access{
+    Admin,
+    User,
+    Guest,
 }
 
-fn findUser(name: &str) -> Option<i32>{
-    let name = name.to_lowercase();
-    match name.as_str() {
-        "sam" => Some(1),
-        "matt" => Some(5),
-        "katie" => Some(9),
-        N_ => None,
+fn maybeAccess(name: &str) -> Option<Access>{
+    match name {
+        "admin" => Some(Access::Admin),
+        "gary" => Some(Access::User),
+        _ => None,
     }
 }
 
+fn root() -> Option<Access>{
+    Some(Access::Admin)
+}
 
 fn main() {
     let a: Option<i32> = Some(1);
