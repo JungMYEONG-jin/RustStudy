@@ -18,6 +18,8 @@ use core::borrow::{Borrow, BorrowMut};
 use rand::Rng;
 use std::io;
 use std::collections::{BTreeMap, HashMap};
+use std::time::Duration;
+use humantime::format_duration;
 use crate::a1::lastName;
 use crate::a8::{Drink, Flavor};
 
@@ -60,18 +62,6 @@ enum Color {
 
 fn main() {
     // learn if let phrase
-    let mut data = Some(3);
-
-    while let Some(i) = data{
-        println!("loop");
-        data = None;
-    }
-
-    let nums = vec![1, 2, 3];
-
-    let mut numIter = nums.iter();
-    while let Some(num) = numIter.next(){
-        println!("{:?}", num);
-    }
-
+    let d = Duration::from_secs(9876);
+    println!("{}", format_duration(d));
 }
