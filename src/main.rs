@@ -24,19 +24,9 @@ use humantime::format_duration;
 use crate::a1::lastName;
 use crate::a8::{Drink, Flavor};
 
-
-const MAX_SPEED: i32 = 9000;
-
-fn clamp_speed(speed: i32) -> i32{
-    if speed > MAX_SPEED {
-        MAX_SPEED
-    }else {
-        speed
-    }
-}
-
+// use lib name
+use demo::print_from_lib;
 
 fn main() {
-    let p = Package::default();
-    println!("{:?}", p);
+    print_from_lib();
 }

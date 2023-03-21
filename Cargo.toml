@@ -5,6 +5,10 @@ edition = "2021"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
+[lib]
+name = "demo"
+path = "src/lib.rs"
+
 [dependencies]
 rand="0.3.14"
 humantime = "2.1.0"
