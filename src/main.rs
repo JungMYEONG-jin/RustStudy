@@ -44,9 +44,10 @@ fn root() -> Option<Access>{
 fn main() {
 
     let numbers = vec![1, 2, 3, 4, 5];
-    let plusOne: Vec<_> = numbers.iter().map(|x| x+1).collect();
-    println!("{:?}", plusOne);
-    let twiceOnlyEven: Vec<_> = numbers.iter().filter(|x| *x%2 == 0).map(|x| 2 * x).collect();
-    println!("{:?}", twiceOnlyEven);
-
+    println!("triple start...");
+    // lv1
+    let tripleAndFilter: Vec<_> = numbers.iter().map(|x| 3 * x).filter(|num| num > &10).collect();
+    for num in tripleAndFilter{
+        println!("{:?}", num);
+    }
 }
