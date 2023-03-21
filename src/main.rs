@@ -24,59 +24,17 @@ use humantime::format_duration;
 use crate::a1::lastName;
 use crate::a8::{Drink, Flavor};
 
-trait Perimeter{
-    fn getPerimeter(&self) -> i32;
-}
 
-struct Triangle{
-    a: i32,
-    b: i32,
-    c: i32,
-}
-impl Perimeter for Triangle{
-    fn getPerimeter(&self) -> i32 {
-        println!("a+b+c");
-        self.a+self.b+self.c
+const MAX_SPEED: i32 = 9000;
+
+fn clamp_speed(speed: i32) -> i32{
+    if speed > MAX_SPEED {
+        MAX_SPEED
+    }else {
+        speed
     }
 }
 
-struct Square{
-    a: i32,
-}
-impl Perimeter for Square{
-    fn getPerimeter(&self) -> i32 {
-        println!("4 * side");
-        4*self.a
-    }
-}
-
-fn calcPrimeter(thing: impl Perimeter){
-    let perimeter = thing.getPerimeter();
-    println!("perimeter {:?}", perimeter);
-}
-
-enum Color {
-    Red,
-    Blue,
-    Green,
-}
-
-#[derive(Debug)]
-struct Package{
-    weight: f64,
-}
-
-impl Package{
-    fn new(weight: f64) -> Self{
-        Self {weight}
-    }
-}
-
-impl Default for Package{
-    fn default() -> Self {
-        Self {weight: 3.0}
-    }
-}
 
 fn main() {
     let p = Package::default();
