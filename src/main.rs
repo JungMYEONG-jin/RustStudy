@@ -24,9 +24,11 @@ use humantime::format_duration;
 use crate::a1::lastName;
 use crate::a8::{Drink, Flavor};
 
-// use lib name
-use demo::print_from_lib;
+// use ${lib name 내가 toml에 명시한 lib 이름}
+use demo::{group, print_from_lib};
+
 
 fn main() {
     print_from_lib();
+    group::g1::helloG1();
 }
