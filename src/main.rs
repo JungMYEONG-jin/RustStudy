@@ -22,30 +22,28 @@ use crate::a1::lastName;
 use crate::a7::Color;
 use crate::a8::{Drink, Flavor};
 
-#[derive(Debug, Eq, PartialEq)]
-enum Access{
-    Admin,
-    User,
-    Guest,
+trait Fall{
+    fn hitGround(&self);
 }
 
-fn maybeAccess(name: &str) -> Option<Access>{
-    match name {
-        "admin" => Some(Access::Admin),
-        "gary" => Some(Access::User),
-        _ => None,
+struct Vase;
+impl Fall for Vase{
+    fn hitGround(&self) {
+        println!("the vase broken");
     }
 }
 
-fn root() -> Option<Access>{
-    Some(Access::Admin)
+struct Cat;
+impl Fall for Cat{
+    fn hitGround(&self) {
+        println!("the cat casually walked away");
+    }
 }
 
+fn fall(thing: impl Fall){
+    thing.hitGround();
+}
 fn main() {
-    let range = 1..=3;
-    let range2 = 1..4;
-
-    for num in range2{
-        println!("{:?}", num);
-    }
+    fall(Vase  {});
+    fall(Cat  {});
 }
