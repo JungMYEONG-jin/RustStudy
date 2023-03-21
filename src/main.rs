@@ -42,12 +42,10 @@ fn root() -> Option<Access>{
 }
 
 fn main() {
+    let range = 1..=3;
+    let range2 = 1..4;
 
-    let numbers = vec![1, 2, 3, 4, 5];
-    println!("triple start...");
-    // lv1
-    let tripleAndFilter: Vec<_> = numbers.iter().map(|x| 3 * x).filter(|num| num > &10).collect();
-    for num in tripleAndFilter{
+    for num in range2{
         println!("{:?}", num);
     }
 }
