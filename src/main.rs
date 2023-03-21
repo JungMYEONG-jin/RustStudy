@@ -23,28 +23,37 @@ use crate::a7::Color;
 use crate::a8::{Drink, Flavor};
 
 trait Perimeter{
-    fn getPerimeter(&self);
+    fn getPerimeter(&self) -> i32;
 }
 
-struct Triangle;
+struct Triangle{
+    a: i32,
+    b: i32,
+    c: i32,
+}
 impl Perimeter for Triangle{
-    fn getPerimeter(&self) {
+    fn getPerimeter(&self) -> i32 {
         println!("a+b+c");
+        self.a+self.b+self.c
     }
 }
 
-struct Square;
+struct Square{
+    a: i32,
+}
 impl Perimeter for Square{
-    fn getPerimeter(&self) {
+    fn getPerimeter(&self) -> i32 {
         println!("4 * side");
+        4*self.a
     }
 }
 
 fn calcPrimeter(thing: impl Perimeter){
-    thing.getPerimeter();
+    let perimeter = thing.getPerimeter();
+    println!("perimeter {:?}", perimeter);
 }
 
 fn main() {
-    calcPrimeter(Triangle  {});
-    calcPrimeter(Square  {});
+    calcPrimeter(Triangle  {a:3, b:2, c:1});
+    calcPrimeter(Square  { a: 2});
 }
