@@ -19,6 +19,7 @@ use rand::Rng;
 use std::io;
 use std::collections::{BTreeMap, HashMap};
 use std::time::Duration;
+use chrono::{DateTime, Local};
 use humantime::format_duration;
 use crate::a1::lastName;
 use crate::a8::{Drink, Flavor};
@@ -60,8 +61,24 @@ enum Color {
     Green,
 }
 
+#[derive(Debug)]
+struct Package{
+    weight: f64,
+}
+
+impl Package{
+    fn new(weight: f64) -> Self{
+        Self {weight}
+    }
+}
+
+impl Default for Package{
+    fn default() -> Self {
+        Self {weight: 3.0}
+    }
+}
+
 fn main() {
-    // learn if let phrase
-    let d = Duration::from_secs(9876);
-    println!("{}", format_duration(d));
+    let p = Package::default();
+    println!("{:?}", p);
 }
