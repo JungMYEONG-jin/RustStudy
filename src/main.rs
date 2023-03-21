@@ -22,28 +22,29 @@ use crate::a1::lastName;
 use crate::a7::Color;
 use crate::a8::{Drink, Flavor};
 
-trait Fall{
-    fn hitGround(&self);
+trait Perimeter{
+    fn getPerimeter(&self);
 }
 
-struct Vase;
-impl Fall for Vase{
-    fn hitGround(&self) {
-        println!("the vase broken");
+struct Triangle;
+impl Perimeter for Triangle{
+    fn getPerimeter(&self) {
+        println!("a+b+c");
     }
 }
 
-struct Cat;
-impl Fall for Cat{
-    fn hitGround(&self) {
-        println!("the cat casually walked away");
+struct Square;
+impl Perimeter for Square{
+    fn getPerimeter(&self) {
+        println!("4 * side");
     }
 }
 
-fn fall(thing: impl Fall){
-    thing.hitGround();
+fn calcPrimeter(thing: impl Perimeter){
+    thing.getPerimeter();
 }
+
 fn main() {
-    fall(Vase  {});
-    fall(Cat  {});
+    calcPrimeter(Triangle  {});
+    calcPrimeter(Square  {});
 }
