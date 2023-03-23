@@ -7,6 +7,7 @@ mod a6;
 mod a7;
 mod a8;
 mod bills;
+mod newType;
 
 use bills::*;
 
@@ -79,4 +80,18 @@ fn run(step: i32) -> Result<(), ProgramError>
 fn main() {
     println!("{:?}", run(1));
     println!("{:?}", run(2));
+}
+
+
+#[cfg(test)]
+mod test{
+    use crate::newType::{divide, NeverZero};
+
+    #[test]
+    fn matchTest(){
+        match NeverZero::new(0) {
+            Ok(res) => println!("{:?}", divide(10, res)),
+            Err(e) => println!("{:?}", e),
+        }
+    }
 }
