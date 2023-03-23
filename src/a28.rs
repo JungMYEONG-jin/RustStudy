@@ -18,8 +18,11 @@ pub enum Color{
 #[derive(Debug)]
 pub struct Cloth(Color);
 impl Cloth{
-    pub fn new(color: Color) -> Self{
-        Self(color)
+    pub fn new(color: Color) -> Result<Self, String>{
+        match color {
+            Color::Purple => Err("Purple not allowed".to_owned()),
+            other => Ok(Self(other)),
+        }
     }
 }
 
