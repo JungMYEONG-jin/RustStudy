@@ -8,7 +8,7 @@ pub struct Bill{
 
 // 하나만 있을때 inner 종종 씀
 pub struct Bills{
-    inner: HashMap<String, Bill>,
+    pub(crate) inner: HashMap<String, Bill>,
 }
 
 impl Bills{
