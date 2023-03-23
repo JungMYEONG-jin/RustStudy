@@ -8,6 +8,7 @@ mod a7;
 mod a8;
 mod bills;
 mod newType;
+mod a28;
 
 use bills::*;
 
@@ -85,6 +86,7 @@ fn main() {
 
 #[cfg(test)]
 mod test{
+    use crate::a28::{Cloth, Pants, Shoes, Color};
     use crate::newType::{divide, NeverZero};
 
     #[test]
@@ -93,5 +95,12 @@ mod test{
             Ok(res) => println!("{:?}", divide(10, res)),
             Err(e) => println!("{:?}", e),
         }
+    }
+
+    #[test]
+    fn colorTest(){
+        let cloth = Cloth::new(Color::Green);
+        let pants = Pants::new(Color::Gray);
+        let shoes = Shoes::new(Color::Red);
     }
 }
