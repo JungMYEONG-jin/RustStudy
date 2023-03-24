@@ -336,9 +336,22 @@ fn run(opt: Opt) -> Result<(), std::io::Error> {
     Ok(())
 }
 
+fn math(a: i32, b: i32, op: Box<dyn Fn(i32, i32) -> i32>) -> i32{
+    op(a, b)
+}
+
+
 fn main() {
-    let opt = Opt::from_args();
-    if let Err(e) = run(opt) {
-        println!("an error occurred: {}", e);
-    }
+    // let opt = Opt::from_args();
+    // if let Err(e) = run(opt) {
+    //     println!("an error occurred: {}", e);
+    // }
+    let mul = Box::new(|a, b| {
+        println!("multiple");
+        a*b
+    });
+
+
+    let i = math(3, 5, mul);
+    println!("{:?}", i);
 }
