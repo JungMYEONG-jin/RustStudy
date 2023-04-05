@@ -13,8 +13,9 @@ mod sample_error;
 type Result<T> = std::result::Result<T, String>;
 
 fn double_first(vec: Vec<&str>) -> sample_error::Result<i32> {
-    return vec.first().ok_or(CustomError::EmptyVec)
-        .and_then(|s| s.parse::<i32>().map_err(CustomError::Parse).map(|i| 2*i));
+    let first =  vec.first().ok_or(CustomError::EmptyVec)?;
+    let parsed = first.parse::<i32>()?;
+    Ok(2 * parsed)
 }
 
 fn print(result: sample_error::Result<i32>){
