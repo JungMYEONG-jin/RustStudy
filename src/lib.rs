@@ -5,6 +5,7 @@ pub mod group;
 mod customError;
 mod newType;
 mod sample_error;
+mod sample_enum;
 
 pub fn print_from_lib(){
     use helper::{print_from_hep, print_again};
