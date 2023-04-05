@@ -4,20 +4,20 @@ use std::io::{Read, Write};
 use std::path::PathBuf;
 use structopt::StructOpt;
 use thiserror::Error;
+use crate::sample_error::CustomError;
+
+mod sample_error;
 
 // panic을 하지 않고 unwrap 하는법 try!
 
 type Result<T> = std::result::Result<T, String>;
 
-fn double_first(vec: Vec<&str>) -> Result<i32> {
-
-    let first = vec.first().ok_or("There is no element in vector".to_owned())?;
-
-    let value = first.parse::<i32>().map_err(|e| e.to_string())?;
-    Ok(2 * value)
+fn double_first(vec: Vec<&str>) -> sample_error::Result<i32> {
+    return vec.first().ok_or(CustomError::EmptyVec)
+        .and_then(|s| s.parse::<i32>().map_err(CustomError::Parse).map(|i| 2*i));
 }
 
-fn print(result: Result<i32>){
+fn print(result: sample_error::Result<i32>){
     match result{
         Ok(n) => println!("The first double value is {}", n),
         Err(e) => println!("Error {}", e),
@@ -25,8 +25,10 @@ fn print(result: Result<i32>){
 }
 
 fn main() {
+    let nums = vec!["93", "22"];
     let vec = vec![];
     let strings = vec!["tt", "93", "22"];
     print(double_first(vec));
+    print(double_first(nums));
     print(double_first(strings));
 }
